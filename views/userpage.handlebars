@@ -1,0 +1,52 @@
+<h1>{{username}}'s Page!
+    {{#if loggedInUser}}
+    {{#unless isMyPage}}
+    {{#if isFollowing}}
+     <button data-user={{id}} id="unfollowBtn">-UnFollow</button>
+    {{/if}}
+    {{#unless isFollowing}}
+        <button data-user={{id}} id="followBtn">+Follow</button>
+    {{/unless}}
+    {{/unless}}
+    {{/if}}
+</h1>
+{{#if isMyPage}}
+    <h3>Whats on your mind?</h3>
+    <form id="newPostForm">
+        <textarea id="newPostBody" id="" cols="30" rows="10">your thoughts...</textarea>
+        <button>Share thought!</button>
+    </form>
+{{/if}}
+
+{{#each Posts }}
+    <div class="blogPost">
+        <h3>{{../username}} on {{formattedDate}} at {{formattedTime}}</h3>
+        {{#if ../isMyPage}}
+        <button class="delPostBtn" data-id={{id}}>Delete</button>
+        {{/if}}
+        <p>{{body}}</p>
+      
+        <h4>Comments</h4>
+        {{#if Comments.length}}
+        {{#each Comments}}
+            <p><strong><a href="/profile/{{User.id}}">{{User.username}}</a></strong> says:"{{body}}"</p> 
+        {{/each}}
+        
+        {{/if}}
+        {{#unless Comments.length}}
+            <p>No Comments yet!</p>
+        {{/unless}}
+         {{#if ../loggedInUser}}
+       <form class="addCommentForm">
+           <textarea class="commentBody" cols="30" rows="5">add your comment...</textarea>
+           <input type="hidden" class="postid" value={{id}}>
+           <button>add comment</button>
+       </form>
+       {{/if}}
+       
+    </div>
+
+{{/each}}
+<script src="/js/profile.js"></script>
+<script src="/js/commentBtn.js"></script>
+<script src="/js/followUnfollow.js"></script>

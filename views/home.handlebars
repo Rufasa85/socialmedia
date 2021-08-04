@@ -1,0 +1,36 @@
+<h1>Recent Posts!</h1>
+{{#if loggedInUser}}
+    <h3>Whats on your mind?</h3>
+    <form id="newPostForm">
+        <textarea id="newPostBody" id="" cols="30" rows="10">your thoughts...</textarea>
+        <button>Share thought!</button>
+    </form>
+{{/if}}
+{{#each posts}}
+    <div class="blogPost">
+        <h3><a href="/profile/{{User.id}}">{{User.username}}</a> on {{formattedDate}} at {{formattedTime}}</h3>
+        <p>{{body}}</p>
+      
+        <h4>Comments</h4>
+        {{#if Comments.length}}
+        {{#each Comments}}
+            <p><strong><a href="/profile/{{User.id}}">{{User.username}}</a></strong> says:"{{body}}"</p> 
+        {{/each}}
+        
+        {{/if}}
+        {{#unless Comments.length}}
+            <p>No Comments yet!</p>
+        {{/unless}}
+       {{#if ../loggedInUser}}
+       <form class="addCommentForm">
+           <textarea class="commentBody" cols="30" rows="5">add your comment...</textarea>
+           <input type="hidden" class="postid" value={{id}}>
+           <button>add comment</button>
+       </form>
+       {{/if}}
+    </div>
+
+{{/each}}
+
+<script src="/js/profile.js"></script>
+<script src="/js/commentBtn.js"></script>

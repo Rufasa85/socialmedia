@@ -31,6 +31,11 @@ router.post("/",(req,res)=>{
         username:req.body.username,
         password:req.body.password
     }).then(userData=>{
+        req.session.user = {
+            id:userData.id,
+            username:userData.username,
+            email:userData.email
+        }
         res.json(userData)
     }).catch(err=>{
         console.log(err);
